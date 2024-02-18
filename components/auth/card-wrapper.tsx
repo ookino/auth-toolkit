@@ -12,7 +12,7 @@ import { Header } from './header';
 import { BackButton } from './back-button';
 import { AuthDivider } from './auth-divider';
 import { cn } from '@/lib/utils';
-import { poppins600 } from '../fonts';
+import { poppins } from '../fonts';
 
 interface Props {
   children: React.ReactNode;
@@ -37,7 +37,7 @@ export function CardWrapper({
     <Card className="w-[400px]">
       <CardHeader className="space-y-0">
         <CardTitle
-          className={cn('text-3xl  tracking-tighter', poppins600.className)}
+          className={cn('text-3xl  tracking-tighter', poppins.className)}
         >
           {headerLabel}
         </CardTitle>

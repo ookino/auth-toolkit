@@ -1,6 +1,11 @@
-import { Poppins } from 'next/font/google';
+import { Poppins, Playfair_Display } from 'next/font/google';
 
-export const poppins600 = Poppins({
+export const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['600'],
+  weight: ['600', '400'],
+});
+
+export const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400'],
 });
