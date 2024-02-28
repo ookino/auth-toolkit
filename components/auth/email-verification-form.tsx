@@ -30,7 +30,7 @@ export function EmailVerificationForm() {
         setStatus({ type: 'error', message: 'Something went wrong' });
       });
     console.log(token);
-  }, [token, status?.message, status?.type]);
+  }, [token]);
 
   useEffect(() => {
     onSubmit();

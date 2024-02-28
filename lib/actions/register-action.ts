@@ -37,6 +37,6 @@ export async function register(values: z.infer<typeof RegisterSchema>) {
     );
     return { success: 'User created' };
   } catch (error) {
-    console.log('error erro err er e', error);
+    return { error: 'Something went wrong' };
   }
 }

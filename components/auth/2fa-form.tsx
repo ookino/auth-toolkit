@@ -1,17 +1,16 @@
-'use client';
+"use client";
 
+import { LoginSchema } from "@/schemas";
+import { Control } from "react-hook-form";
+import * as z from "zod";
 import {
-  Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-} from '../ui/form';
-import { Input } from '../ui/input';
-import { Control } from 'react-hook-form';
-import { LoginSchema } from '@/schemas';
-import * as z from 'zod';
+} from "../ui/form";
+import { Input } from "../ui/input";
 
 interface TwoFactorFormProps {
   control: Control<z.infer<typeof LoginSchema>>;

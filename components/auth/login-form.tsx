@@ -21,6 +21,7 @@ import { useState, useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { error } from 'console';
+import { Suspense } from 'react';
 import { TwoFactorForm } from './2fa-form';
 interface Status {
   type?: 'error' | 'success';
@@ -72,102 +73,104 @@ export function LoginForm() {
   }
 
   return (
-    <CardWrapper
-      headerLabel="Welcome back"
-      subheaderLabel="Login to your Account"
-      backButtonHref="/register"
-      backButtonLabel="Don't have any account ?"
-      showSocial
-      on2FA={show2FA}
-    >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className={'space-y-4'}>
-          <div className="space-y-4">
-            {!show2FA && (
-              <>
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="johndoe@example.com"
-                          type="email"
-                          disabled={pending}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex justify-between items-center w-full">
-                        <FormLabel>Password</FormLabel>
-                        <Button
-                          className=" text-muted-foreground p-0"
-                          size={'sm'}
-                          variant={'link'}
-                          asChild
-                        >
-                          <Link href={'/auth/forgot-password'}>
-                            Forgot password ?
-                          </Link>
-                        </Button>
-                      </div>
+    <Suspense>
+      <CardWrapper
+        headerLabel="Welcome back"
+        subheaderLabel="Login to your Account"
+        backButtonHref="/register"
+        backButtonLabel="Don't have any account ?"
+        showSocial
+        on2FA={show2FA}
+      >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className={'space-y-4'}>
+            <div className="space-y-4">
+              {!show2FA && (
+                <>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="johndoe@example.com"
+                            type="email"
+                            disabled={pending}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex justify-between items-center w-full">
+                          <FormLabel>Password</FormLabel>
+                          <Button
+                            className=" text-muted-foreground p-0"
+                            size={'sm'}
+                            variant={'link'}
+                            asChild
+                          >
+                            <Link href={'/auth/forgot-password'}>
+                              Forgot password ?
+                            </Link>
+                          </Button>
+                        </div>
 
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="'******'"
-                          type="password"
-                          disabled={pending}
-                        />
-                      </FormControl>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="'******'"
+                            type="password"
+                            disabled={pending}
+                          />
+                        </FormControl>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </>
+              )}
+              {show2FA && (
+                <TwoFactorForm control={form.control} isPending={pending} />
+              )}
+            </div>
+            {status.type && (
+              <FormAlert status={status.type} message={status.message} />
             )}
-            {show2FA && (
-              <TwoFactorForm control={form.control} isPending={pending} />
+            {!status.type && urlError.type && (
+              <FormAlert
+                status={urlError.type as 'error' | 'success'}
+                message={urlError.message}
+              />
             )}
-          </div>
-          {status.type && (
-            <FormAlert status={status.type} message={status.message} />
-          )}
-          {!status.type && urlError.type && (
-            <FormAlert
-              status={urlError.type as 'error' | 'success'}
-              message={urlError.message}
-            />
-          )}
 
-          <div className="flex flex-col gap-4">
-            <Button type="submit" className="w-full" disabled={pending}>
-              {show2FA ? 'Confirm' : 'Login'}
-            </Button>
-
-            {show2FA && (
-              <Button
-                variant={'link'}
-                size={'sm'}
-                onClick={() => setShow2FA(false)}
-              >
-                Cancel
+            <div className="flex flex-col gap-4">
+              <Button type="submit" className="w-full" disabled={pending}>
+                {show2FA ? 'Confirm' : 'Login'}
               </Button>
-            )}
-          </div>
-        </form>
-      </Form>
-    </CardWrapper>
+
+              {show2FA && (
+                <Button
+                  variant={'link'}
+                  size={'sm'}
+                  onClick={() => setShow2FA(false)}
+                >
+                  Cancel
+                </Button>
+              )}
+            </div>
+          </form>
+        </Form>
+      </CardWrapper>
+    </Suspense>
   );
 }

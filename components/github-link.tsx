@@ -8,7 +8,7 @@ import { Button } from './ui/button';
 import { FaGithubAlt } from 'react-icons/fa';
 export function GithubLink() {
   return (
-    <div className="flex items-center justify-end p-2 absolute bottom-0 right-0 w-fit">
+    <div className="flex items-center justify-end p-2 absolute bottom-0 right-0 w-fit z-30">
       <Button asChild variant={'link'}>
         <Link href="https://okino.works">
           <FaGithubAlt className="text-muted-foreground w-6 h-6" />

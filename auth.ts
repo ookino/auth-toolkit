@@ -33,6 +33,7 @@ export const {
     async signIn({ user, account }) {
       if (account?.provider !== 'credentials') return true;
 
+      if (!user.id) return false;
       const existingUser = await getUserById(user?.id);
       if (!existingUser?.emailVerified) {
         return false;
@@ -62,6 +63,10 @@ export const {
         session.user.role = token.role as UserRole;
       }
 
+      if (session.user) {
+        session.user.is2FAEnabled = token.is2FAEnabled as boolean;
+      }
+
       return session;
     },
     async jwt({ token }) {
@@ -69,6 +74,7 @@ export const {
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
       token.role = existingUser.role;
+      token.is2FAEnabled = existingUser.isTwoFAEnabled;
       return token;
     },
   },

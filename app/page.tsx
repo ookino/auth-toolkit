@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { LoginButton } from '@/components/auth/login-button';
+import { KeyRound } from 'lucide-react';
 
 const font = Poppins({
   subsets: ['latin'],
@@ -10,14 +11,12 @@ const font = Poppins({
 });
 export default async function Home() {
   return (
-    <main className="flex h-full flex-col items-center justify-center bg-neutral-800 text-neutral-100">
+    <main className="flex h-full flex-col items-center justify-center  bg-center bg-no-repeat bg-cover">
       <div className="space-y-2 text-center">
-        <h1 className={cn(' tracking-tight text-5xl', font.className)}>Auth</h1>
-        <p>A simple authentication service</p>
-
         <div className="py-4">
           <LoginButton>
-            <Button variant="secondary" size={'lg'}>
+            <Button variant="outline" className="gap-4" size={'lg'}>
+              <KeyRound className="w-4 h-4" />
               Sign in
             </Button>
           </LoginButton>
